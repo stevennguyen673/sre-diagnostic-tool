@@ -1,23 +1,25 @@
 import subprocess
 
-res = subprocess.run(["ss", "-tuln"], capture_output=True, text=True)
+def get_network_metrics():
 
-cleaned = res.stdout.split("\n")
+    res = subprocess.run(["ss", "-tuln"], capture_output=True, text=True)
 
-networks = []
+    cleaned = res.stdout.split("\n")
 
-for line in cleaned:
-    if line.strip():
-        line_list = line.split()
-        # skips header
-        if line_list[0] == "Netid":
-            continue
-        else:
-            network = {}
-            network["protocol"] = line_list[0]
-            network["state"] = line_list[1]
-            network["local_address"] = line_list[4]
+    networks = []
 
-            networks.append(network)
+    for line in cleaned:
+        if line.strip():
+            line_list = line.split()
+            # skips header
+            if line_list[0] == "Netid":
+                continue
+            else:
+                network = {}
+                network["protocol"] = line_list[0]
+                network["state"] = line_list[1]
+                network["local_address"] = line_list[4]
 
-print(networks)
+                networks.append(network)
+
+    return networks
