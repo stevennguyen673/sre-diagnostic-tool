@@ -7,19 +7,19 @@ cleaned = res.stdout.split("\n", maxsplit=5)
 # holds top 5 processes based on cpu usage
 top_processes = []
 
-for output in cleaned:
-    output_list = output.split()
+for line in cleaned:
+    line_list = line.split()
     # skips header
-    if output_list[0] == "USER":
+    if line_list[0] == "USER":
         continue
     else:
         process = {}
-        process["pid"] = output_list[1]
-        process["cpu_percentage"] = output_list[2]
-        process["memory_percentage"] = output_list[3]
+        process["pid"] = line_list[1]
+        process["cpu_percentage"] = line_list[2]
+        process["memory_percentage"] = line_list[3]
         
-        # get more readable name then path
-        command_name_path_list = output_list[10].split("/")
+        # get more readable name than path
+        command_name_path_list = line_list[10].split("/")
         command_name = command_name_path_list[-1]
         
         process["command"] = command_name
@@ -28,7 +28,6 @@ for output in cleaned:
 
 
 
-print(repr(cleaned))
 print(top_processes)
 
 
