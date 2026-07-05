@@ -2,13 +2,12 @@ from diagnostics.cpu import get_cpu_metrics
 from diagnostics.memory import get_memory_metrics
 from diagnostics.disk import get_disk_metrics
 from diagnostics.network import get_network_metrics
+from azure.teardown import teardown
+from azure.deploy import deploy_vm
 
-print("========================================")
-print("      SRE LOCAL DIAGNOSTICS REPORT      ")
-print("========================================\n")
+print("===== SRE LOCAL DIAGNOSTICS REPORT =====\n")
 
-print("CPU / TOP PROCESSES")
-print("========================================\n")
+print("--- CPU (Top 5 Processes) ---\n")
 
 cpu = get_cpu_metrics()
 
@@ -19,8 +18,7 @@ for process in cpu:
     print("Memory Usage: ", process["memory_percentage"])
     print("\n")
 
-print("MEMORY")
-print("========================================\n")
+print("--- MEMORY ---\n")
 
 memory = get_memory_metrics()
 
@@ -29,8 +27,7 @@ print("Used: ", memory["used"])
 print("Available: ", memory["available"])
 print("\n")
 
-print("DISK")
-print("========================================\n")
+print("--- DISK ---\n")
 
 disk = get_disk_metrics()
 
@@ -40,8 +37,7 @@ print("Available: ", disk["available"])
 print("Usage: ", disk["usage"])
 print("\n")
 
-print("NETWORK")
-print("========================================\n")
+print("--- NETWORK ---\n")
 
 networks = get_network_metrics()
 
@@ -51,7 +47,33 @@ for network in networks:
 print("\n")
 
 
-print("========================================")
-print("   Diagnostics Completed Succesfully   ")
-print("========================================\n")
+print("===== Diagnostics Completed Succesfully =====\n")
+
+# Deploy VM
+while True:
+    response = input("Would you like to deploy a VM? (y/n)")
+
+    if response.lower() == 'y':
+        deploy_vm()
+        print("Deployment Complete")
+        
+        while True:
+            ans = input("Would you like to teardown now? (y/n)")
+            
+            if ans.lower() == 'y':
+                teardown()
+                break
+            elif ans.lower() == 'n':
+                print("\nRemember to teardown to avoid unwanted charges!!!")
+                break
+            else:
+                print("Invalid input. Try again\n")
+        break
+    elif response.lower() == 'n':
+        print("\nDeployment Cancelled")
+        break
+    else:
+        print("Invalid input. Try again\n")
+
+
 

@@ -19,7 +19,7 @@ def get_cpu_metrics():
             process["cpu_percentage"] = line_list[2]
             process["memory_percentage"] = line_list[3]
             
-            # get more readable name than path
+            # gets more readable name than path
             command_name_path_list = line_list[10].split("/")
             command_name = command_name_path_list[-1]
             

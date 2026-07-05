@@ -7,7 +7,7 @@ def get_disk_metrics():
 
     disk = {}
 
-    # memory row
+    # disk row
     line = cleaned[1].split()
 
     disk["size"] = line[1]
