@@ -14,8 +14,8 @@ cpu = get_cpu_metrics()
 for process in cpu:
     print("PID: ", process["pid"])
     print("Command: ", process["command"])
-    print("CPU Usage: ", process["cpu_percentage"])
-    print("Memory Usage: ", process["memory_percentage"])
+    print("CPU Usage: ", process["cpu_percentage"] + "%")
+    print("Memory Usage: ", process["memory_percentage"] + "%")
     print("\n")
 
 print("--- MEMORY ---\n")

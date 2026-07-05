@@ -64,7 +64,6 @@ def deploy_vm():
         ]
         run_az_command(auto_shutdown_cmd)
 
-        print(f"\nSuccessfully Created")
     else:
         print(f"VM {vm_name} already exists")
     
